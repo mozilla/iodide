@@ -157,7 +157,10 @@ export default function HomePage({ notebookList, userInfo, headerMessage }) {
         const redirectDelay = 1500;
 
         const fetches = files.map(
-          ({ file }, i) => `text: file${i}=${file.name}`
+          ({ file }, i) => {
+            const fetchType = file.type.startsWith("text") ? "text" : "blob";
+            return `${fetchType}: file${i}=${file.name}`;
+        }
         );
 
         const body = `%% fetch\n${fetches.join("\n")}`;
